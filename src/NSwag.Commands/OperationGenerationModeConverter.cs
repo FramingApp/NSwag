@@ -29,6 +29,9 @@ namespace NSwag.Commands
             {
                 return OperationGenerationMode.MultipleClientsFromFirstTagAndPathSegments;
             }
+            if (operationNameGenerator is MultipleClientsFromFirstTagAndPathSegmentsAndPathParametersOperationNameGenerator) {
+                return OperationGenerationMode.MultipleClientsFromFirstTagAndPathSegmentsAndPathParameters;
+            }//Harry Mod
 
             if (operationNameGenerator is MultipleClientsFromFirstTagAndOperationIdGenerator)
             {
@@ -62,6 +65,10 @@ namespace NSwag.Commands
             {
                 return new MultipleClientsFromFirstTagAndPathSegmentsOperationNameGenerator();
             }
+            else if (operationGenerationMode == OperationGenerationMode.MultipleClientsFromFirstTagAndPathSegmentsAndPathParameters) {
+                return new MultipleClientsFromFirstTagAndPathSegmentsAndPathParametersOperationNameGenerator();
+            }//Harry Mod
+
             else if (operationGenerationMode == OperationGenerationMode.MultipleClientsFromFirstTagAndOperationId)
             {
                 return new MultipleClientsFromFirstTagAndOperationIdGenerator();
