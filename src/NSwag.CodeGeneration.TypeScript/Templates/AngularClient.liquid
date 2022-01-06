@@ -1,4 +1,4 @@
-﻿{% if HasOperations -%}
+{% if HasOperations -%}
 {% if GenerateClientInterfaces -%}
 {% if ExportTypes %}export {% endif %}interface I{{ Class }} {
 {%     for operation in Operations -%}
@@ -30,6 +30,12 @@
 {%-    else -%}
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "{{ BaseUrl }}";
 {%-    endif -%}
+        //Harry Mod: For coercing OData response objects just into arrays, so count... is lost, but Get many works
+        this.jsonParseReviver = (key: string, value: any) => {
+            if (key === "" && value["@odata.context"] !== undefined && Array.isArray(value["value"]))
+                return value["value"];
+            return value;
+        };
     }
 {%- endif -%}
 {% if HasExtensionCode -%}
